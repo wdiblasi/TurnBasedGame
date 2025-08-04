@@ -2,11 +2,15 @@ from entity import Entity
 from abc import ABC, abstractmethod
 import asyncio
 
-class Player_Char(ABC, Entity):
-    def __init__(self, max_health, timer_cap, position):
-        super().__init__(max_health, timer_cap, position)
+class Player_Char(Entity):
+    def __init__(self, max_health, strength, timer_cap, position):
+        super().__init__(max_health, strength, timer_cap, position)
 
     async def take_turn(self):
-        print("It is the character in position " + self.position + "'s turn.")
-        print(f"1: Basic Attack\n2: {self.special_move_name}")
-        move_type = await asyncio.to_thread(input, "Enter the number that corresponds with your action: ")
+        print(f"It is the character in position {self.position}'s turn.")
+        print(f"1: Standard Attack (Deal damage to target)\n2: {self.special_move_name}")
+        move_type = int(await asyncio.to_thread(input, "Enter the number that corresponds with your action: "))
+        if move_type == 1:
+            await self.standard_attack()
+        if move_type == 2:
+            await self.special_move()
