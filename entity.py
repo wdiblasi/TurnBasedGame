@@ -9,13 +9,31 @@ class Entity(ABC):
         self.timer_cap = timer_cap
         self.timer = 0
         self.position = position
-        self.is_alive = True
+        self.entities = []
 
     async def inc_timer(self):
-        self.timer += 1
-        if self.timer >= self.timer_cap:
-            await self.take_turn()
+        if(self.is_alive()):
+            self.timer += 1
+            if self.timer >= self.timer_cap:
+                await self.take_turn()
 
+    def deal_damage(self, damage, target):
+        self.entities[target].take_damage(damage)
+
+    def take_damage(self, damage):
+        self.hp -= damage
+
+    def set_list(self, entities):
+        self.entities = entities
+
+    def get_hp(self):
+        return self.hp
+    
+    def is_alive(self):
+        if self.hp > 0:
+            return True
+        return False
+    
     @abstractmethod
     async def take_turn(self):
         pass
