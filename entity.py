@@ -26,6 +26,9 @@ class Entity(ABC):
     def set_list(self, entities):
         self.entities = entities
 
+    def set_hp(self, hp):
+        self.hp = hp
+        
     def get_hp(self):
         return self.hp
     

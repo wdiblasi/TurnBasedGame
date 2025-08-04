@@ -12,7 +12,7 @@ class Attacker(Player_Char):
         self.attack_modifier = 1.0
 
     async def standard_attack(self):
-        target = int(await asyncio.to_thread(input, "Enter the position of your target: "))
+        target = 3 #int(await asyncio.to_thread(input, "Enter the position of your target: "))
         print(f"You have done {int(self.strength * self.attack_modifier)} damage to the enemy in position {target}.")
         self.deal_damage(int(self.strength * self.attack_modifier),target)
 
