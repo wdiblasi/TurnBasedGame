@@ -6,6 +6,7 @@ class Player_Char(Entity):
     def __init__(self, max_health, strength, timer_cap, position):
         super().__init__(max_health, strength, timer_cap, position)
 
+    # Waits for player input before an ally takes a turn
     async def take_turn(self):
         print(f"It is the character in position {self.position}'s turn.")
         print(f"1: Standard Attack (Deal damage to target)\n2: {self.special_move_name}")

@@ -6,6 +6,10 @@ class Game:
     # List that holds every entity
     entities = []
 
+    # Runs setup method
+    # Sets state to running
+    # Runs play method until state changes
+    # Outputs corresponding result from state
     def __init__(self): 
         self.setup()
         self.state = 0 # 0 = Running, 1 = Player Win, 2 = Player Loss
@@ -16,6 +20,10 @@ class Game:
         if self.state == 2:
             print("Game Over. You lose.")
 
+    # Game setup
+    # Adds three player controlled characters
+    # Adds Enemies
+    # Adds list of entities into every entity
     def setup(self):
         for i in range(0,3):
             self.entities.append(Attacker(i))

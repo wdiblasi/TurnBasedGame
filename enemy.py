@@ -6,6 +6,7 @@ enemy_strength = 20
 enemy_timer_cap = 2
 
 class Enemy(Entity):
+
     def __init__(self, position):
         super().__init__(enemy_max_health, enemy_strength, enemy_timer_cap, position)
         self.special_move_name = "Sweeping Strike"
@@ -14,6 +15,7 @@ class Enemy(Entity):
 
     # The enemy will automatically take its turn and perform a special move every three turns
     async def take_turn(self):
+        # Removing perished allys from enemy target list
         index_list = self.valid_targets.copy()
         for i in index_list:
             if not self.entities[i].is_alive():
@@ -32,6 +34,7 @@ class Enemy(Entity):
         print(f"The enemy has done {int(self.strength)} damage to the ally in position {target}.")
         self.deal_damage(int(self.strength),target)
 
+    # Deal damage equal to strength to all living allies
     async def special_move(self):
         print(f"The enemy has done {int(self.strength)} damage to every ally!")
         for target in self.valid_targets:

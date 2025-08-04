@@ -11,11 +11,13 @@ class Attacker(Player_Char):
         self.special_move_name = "Charge (increase attack modifier)"
         self.attack_modifier = 1.0
 
+    # Deals (strength * modifier) damage to target enemy
     async def standard_attack(self):
         target = 3 #int(await asyncio.to_thread(input, "Enter the position of your target: "))
         print(f"You have done {int(self.strength * self.attack_modifier)} damage to the enemy in position {target}.")
         self.deal_damage(int(self.strength * self.attack_modifier),target)
 
+    # Increases attack modifier
     async def special_move(self):
         self.attack_modifier += 0.25
         print(f"Your attack modifier has been increased to {self.attack_modifier}")
