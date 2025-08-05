@@ -26,7 +26,10 @@ class Player_Char(Entity):
             asyncio.create_task(self.standard_attack())
         if move_type == 2:
             await self.special_move()
-        q.remove[task_num]
+        
+        # Remove from queue so next turn can start
+        q.remove(task_num)
+        
 
     async def wait_for_turn(self, task_num):
         while q[0] != task_num:

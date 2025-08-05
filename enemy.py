@@ -3,7 +3,7 @@ from entity import Entity
 
 enemy_max_health = 200
 enemy_strength = 51
-enemy_timer_cap = 7
+enemy_timer_cap = 20
 
 class Enemy(Entity):
 
