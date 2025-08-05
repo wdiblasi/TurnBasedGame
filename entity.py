@@ -16,8 +16,11 @@ class Entity(ABC):
     async def inc_timer(self):
         if(self.is_alive()):
             self.timer += 1
-            if self.timer >= self.timer_cap:
-                await self.take_turn()
+            if self.timer == self.timer_cap:
+                Turn = asyncio.create_task(self.take_turn())
+                await Turn
+                self.timer = 0
+                print(f"{self.position} timer reset")
 
     # Calls the take_damage method from the target entity
     def deal_damage(self, damage, target):

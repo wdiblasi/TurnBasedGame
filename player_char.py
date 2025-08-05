@@ -10,8 +10,13 @@ class Player_Char(Entity):
     async def take_turn(self):
         print(f"It is the character in position {self.position}'s turn.")
         print(f"1: Standard Attack (Deal damage to target)\n2: {self.special_move_name}")
-        move_type = int(await asyncio.to_thread(input, "Enter the number that corresponds with your action: "))
+        try:
+            move_type = int(await asyncio.to_thread(input, "Enter the number that corresponds with your action: "))
+        except ValueError:
+            print("Invalid input. Defaulting to standard attack.")
+            move_type = 1
+
         if move_type == 1:
-            await self.standard_attack()
+            asyncio.create_task(self.standard_attack())
         if move_type == 2:
             await self.special_move()
