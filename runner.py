@@ -90,7 +90,7 @@ class Game:
 
     async def timer(self, ent):
         while ent.is_alive():
-            await asyncio.sleep(1)
+            await asyncio.sleep(0.01)
             await ent.inc_timer()
             await self.player_loss_check()
             await self.player_win_check()

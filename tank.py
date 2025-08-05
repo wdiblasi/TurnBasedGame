@@ -3,7 +3,7 @@ import asyncio
 
 tank_max_health = 200
 tank_strength = 15
-tank_timer_cap = 5
+tank_timer_cap = 50
 
 class Tank(Player_Char):
     def __init__(self, position):

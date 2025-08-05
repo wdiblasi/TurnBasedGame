@@ -66,7 +66,13 @@ class Entity(ABC):
         return False
     
     def to_string(self):
-        return f"{self.role} in position {self.position} has {self.hp} health remaining."
+        if self.is_alive():
+            if self.timer == self.timer_cap:
+                return f"{self.role} in position {self.position} has {self.hp} health remaining.    Turn Status: Ready"
+            else:
+                return f"{self.role} in position {self.position} has {self.hp} health remaining.    Turn Status: {int(100*(self.timer + 0.0)/self.timer_cap)}"
+        else:
+            return f"{self.role} in position {self.position} has passed out."
 
     
     @abstractmethod
