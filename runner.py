@@ -4,6 +4,9 @@ from tank import Tank
 from enemy import Enemy
 import asyncio
 
+import tkinter as tk
+from tkinter import ttk
+
 class Game:
     # List that holds every entity
     entities = []
@@ -12,37 +15,55 @@ class Game:
     # Sets state to running
     # Runs play method until state changes
     # Outputs corresponding result from state
-    def __init__(self): 
-        self.setup()
+    def __init__(self,root): 
+        self.root = root
+        self.loop = asyncio.get_event_loop()
+        self.health_bars = []
+        self.label = tk.Label(root, text="Game starts soon...")
+        self.label.pack()
+
         self.state = 0 # 0 = Running, 1 = Player Win, 2 = Player Loss
-        
-        asyncio.run(self.play())
+
+        self.setup()
+        print("Setup Completed")
+
+        self.loop.create_task(self.play())
+
+        # Step asyncio using tkinter's mainloop
+        self.root.after(50, self.step_asyncio)
+
         if self.state == 1:
             print("Congratulations! You Win!!!")
         if self.state == 2:
             print("Game Over. You lose.")
 
+    def step_asyncio(self):
+        self.loop.call_soon(self.loop.stop)
+        self.loop.run_forever()
+        self.root.after(50, self.step_asyncio)
+
+    def update_label(self):
+        # Schedule GUI update from async code
+        for i in range(len(self.health_bars)):
+            self.root.after(0, lambda i=i: self.health_bars[i].config(text=self.entities[i].to_string()))
+
+
     # Game setup
     # Adds three player controlled characters
     # Adds Enemies
     # Adds list of entities into every entity
+    # Window setup
     def setup(self):
+        # Entity setup
         self.entities.append(Attacker(0))
         self.entities.append(Healer(1))
         self.entities.append(Tank(2))
         self.entities.append(Enemy(3))
         for i in range(len(self.entities)):
             self.entities[i].set_list(self.entities)
+            self.health_bars.append(tk.Label(self.root, text = self.entities[i].to_string()))
+            self.health_bars[i].pack()
 
-    """
-    async def play(self):
-        await asyncio.sleep(1)
-        for ent in self.entities:
-            if ent.timer < ent.timer_cap:
-                await ent.inc_timer()
-        await self.player_loss_check()
-        await self.player_win_check()
-    """
     async def play(self):
         turn_tasks = []
         is_alive_tasks = []
@@ -70,6 +91,7 @@ class Game:
             await ent.inc_timer()
             await self.player_loss_check()
             await self.player_win_check()
+            self.update_label()
 
     async def player_loss_check(self): # Set state to 2 if all entities position 0-2 inclusive are not alive
         any_alive = False
@@ -91,6 +113,9 @@ class Game:
 
 def main():
     print("Startup Initiated")
-    runner = Game()
+    root = tk.Tk()
+    root.title("Async + Tkinter")
+    game = Game(root)
+    root.mainloop()
 
 main()
