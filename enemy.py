@@ -20,8 +20,9 @@ class Enemy(Entity):
         for i in index_list:
             if not self.entities[i].is_alive():
                 self.valid_targets.remove(i)
-        print(self.valid_targets)
 
+        # Always calls standard attack
+        # Calls special move every 3 turns
         self.turn_count += 1
         await self.standard_attack()
         if self.turn_count % 3 == 0:
