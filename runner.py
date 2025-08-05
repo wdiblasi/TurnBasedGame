@@ -60,6 +60,9 @@ class Game:
             self.health_bars.append(tk.Label(self.root, text = self.entities[i].to_string()))
             self.health_bars[i].pack()
 
+    # This function creates timer tasks for each entity
+    # It also creates tasks that cancel an entities timer task if the game has ended
+    # After all of these tasks have finished it outputs the game's result
     async def play(self):
         turn_tasks = []
         is_alive_tasks = []
@@ -73,7 +76,8 @@ class Game:
                 await turn_tasks[i]
             except asyncio.CancelledError:
                 pass
-
+        
+        # Output result
         if self.state == 1:
             print("Congratulations! You Win!!!")
             self.root.after(0, lambda: self.label.config(text="Congratulations! You Win!!!"))
@@ -81,6 +85,7 @@ class Game:
             print("Game Over. You lose.")
             self.root.after(0, lambda: self.label.config(text="Game Over. You lose."))
 
+    # This task will end its corresponding task if the game has ended
     async def tasks_control(self, ent, index, turn_tasks):
         while self.state == 0 and not turn_tasks[index].done():
             await asyncio.sleep(0.2)
@@ -88,6 +93,8 @@ class Game:
             print(f"{index} has died")
         turn_tasks[index].cancel()
 
+    # This task increments its corresponding entity's timer and checks if the game has ended
+    # It also updates the label for every entity
     async def timer(self, ent):
         while ent.is_alive():
             await asyncio.sleep(0.01)
@@ -96,7 +103,8 @@ class Game:
             await self.player_win_check()
             self.update_label()
 
-    async def player_loss_check(self): # Set state to 2 if all entities position 0-2 inclusive are not alive
+    # Set state to 2 if all allies have died
+    async def player_loss_check(self): 
         any_alive = False
         for i in range(0,3):
             if self.entities[i].is_alive():
@@ -104,8 +112,8 @@ class Game:
         if any_alive == False:
             self.state = 2
 
-
-    async def player_win_check(self): # Set state to 1 if entity in position 4 is not alive
+    # Set state to 1 if all enemies have died
+    async def player_win_check(self): 
         any_alive = False
         for i in range(3,len(self.entities)):
             if self.entities[i].is_alive():
