@@ -32,12 +32,6 @@ class Game:
         # Step asyncio using tkinter's mainloop
         self.root.after(50, self.step_asyncio)
 
-        if self.state == 1:
-            print("Congratulations! You Win!!!")
-            self.root.after(0, lambda: self.label.config(text="Congratulations! You Win!!!"))
-        if self.state == 2:
-            print("Game Over. You lose.")
-            self.root.after(0, lambda: self.label.config(text="Game Over. You lose."))
 
     def step_asyncio(self):
         self.loop.call_soon(self.loop.stop)
@@ -79,6 +73,13 @@ class Game:
                 await turn_tasks[i]
             except asyncio.CancelledError:
                 pass
+
+        if self.state == 1:
+            print("Congratulations! You Win!!!")
+            self.root.after(0, lambda: self.label.config(text="Congratulations! You Win!!!"))
+        if self.state == 2:
+            print("Game Over. You lose.")
+            self.root.after(0, lambda: self.label.config(text="Game Over. You lose."))
 
     async def tasks_control(self, ent, index, turn_tasks):
         while self.state == 0 and not turn_tasks[index].done():
