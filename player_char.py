@@ -30,7 +30,7 @@ class Player_Char(Entity):
         # Remove from queue so next turn can start
         q.remove(task_num)
         
-
+    # Waits to see if it is the ally in this positions turn before continuing its turn
     async def wait_for_turn(self, task_num):
         while q[0] != task_num:
             await asyncio.sleep(0.2)

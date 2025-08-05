@@ -22,7 +22,6 @@ class Entity(ABC):
                 Turn = asyncio.create_task(self.take_turn())
                 await Turn
                 self.timer = 0
-                print(f"{self.position} timer reset")
 
     # Calls the take_damage method from the target entity
     def deal_damage(self, damage, target):
@@ -65,6 +64,7 @@ class Entity(ABC):
             return True
         return False
     
+    # Returns a string to be put into a label
     def to_string(self):
         if self.is_alive():
             if self.timer == self.timer_cap:
