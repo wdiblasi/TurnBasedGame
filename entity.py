@@ -65,14 +65,20 @@ class Entity(ABC):
         return False
     
     # Returns a string to be put into a label
-    def to_string(self):
+    def health_string(self):
         if self.is_alive():
-            if self.timer == self.timer_cap:
-                return f"{self.role} in position {self.position} has {self.hp} health remaining.    Turn Status: Ready"
-            else:
-                return f"{self.role} in position {self.position} has {self.hp} health remaining.    Turn Status: {int(100*(self.timer + 0.0)/self.timer_cap)}"
+            return f"{self.role} in position {self.position} has {self.hp} health remaining."
         else:
             return f"{self.role} in position {self.position} has passed out."
+    
+    def turn_string(self):
+        if self.is_alive():
+            if self.timer == self.timer_cap:
+                return f"Turn Status: Ready"
+            else:
+                return f"Turn Status: {int(100*(self.timer + 0.0)/self.timer_cap)}"
+        else:
+            return f"Turn Status: X"
 
     
     @abstractmethod

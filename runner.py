@@ -19,6 +19,7 @@ class Game:
         self.root = root
         self.loop = asyncio.get_event_loop()
         self.health_bars = []
+        self.turn_labels = []
         self.label = tk.Label(root, text="Game Statistics")
         self.label.pack()
 
@@ -41,7 +42,8 @@ class Game:
     def update_label(self):
         # Schedule GUI update from async code
         for i in range(len(self.health_bars)):
-            self.root.after(0, lambda i=i: self.health_bars[i].config(text=self.entities[i].to_string()))
+            self.root.after(0, lambda i=i: self.health_bars[i].config(text=self.entities[i].health_string()))
+            self.root.after(0, lambda i=i: self.turn_labels[i].config(text=self.entities[i].turn_string()))
 
 
     # Game setup
@@ -51,14 +53,20 @@ class Game:
     # Window setup
     def setup(self):
         # Entity setup
+        health_bar_frame = ttk.Frame(master = self.root)
+        turn_frame = ttk.Frame(master = self.root)
         self.entities.append(Attacker(0))
         self.entities.append(Healer(1))
         self.entities.append(Tank(2))
         self.entities.append(Enemy(3))
         for i in range(len(self.entities)):
             self.entities[i].set_list(self.entities)
-            self.health_bars.append(tk.Label(self.root, text = self.entities[i].to_string()))
-            self.health_bars[i].pack()
+            self.health_bars.append(tk.Label(health_bar_frame, text = self.entities[i].health_string()))
+            self.health_bars[i].pack(anchor="w")
+            self.turn_labels.append(tk.Label(turn_frame, text = self.entities[i].turn_string()))
+            self.turn_labels[i].pack(anchor="w")
+        health_bar_frame.pack(side = "left", padx = 10, pady = 5)
+        turn_frame.pack(side = "left", padx = 10, pady = 5)
 
     # This function creates timer tasks for each entity
     # It also creates tasks that cancel an entities timer task if the game has ended
