@@ -11,6 +11,7 @@ class Entity(ABC):
         self.timer = 0
         self.position = position
         self.entities = []
+        self.is_taunting = False
 
     # Increase timer for when turns are taken
     async def inc_timer(self):
@@ -29,6 +30,19 @@ class Entity(ABC):
     # Deals damage to self
     def take_damage(self, damage):
         self.hp -= damage
+
+    # Heals a percentage of target's health
+    def heal_target(self, heal_percent, target):
+        self.entities[target].heal_self(heal_percent)
+
+    # Heals a percentage of own health
+    def heal_self(self, heal_percent):
+        old_hp = self.hp
+        self.hp += int(self.max_health * (heal_percent/100.0))
+        if(self.hp > self.max_health):
+            self.hp = self.max_health
+        if old_hp < self.hp:
+            print(f"{self.position} has been healed from {old_hp} to {self.hp} hp!")
 
     # Sets entity list so objects can damage each other
     def set_list(self, entities):

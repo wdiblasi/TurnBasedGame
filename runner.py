@@ -1,4 +1,6 @@
 from attacker import Attacker
+from healer import Healer
+from tank import Tank
 from enemy import Enemy
 import asyncio
 
@@ -25,10 +27,9 @@ class Game:
     # Adds Enemies
     # Adds list of entities into every entity
     def setup(self):
-        for i in range(0,3):
-            self.entities.append(Attacker(i))
-        for i in range(1,3):
-            self.entities[i].set_hp(0)
+        self.entities.append(Attacker(0))
+        self.entities.append(Healer(1))
+        self.entities.append(Tank(2))
         self.entities.append(Enemy(3))
         for i in range(len(self.entities)):
             self.entities[i].set_list(self.entities)
@@ -89,6 +90,7 @@ class Game:
         
 
 def main():
+    print("Startup Initiated")
     runner = Game()
 
 main()
