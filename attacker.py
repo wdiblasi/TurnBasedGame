@@ -9,7 +9,6 @@ class Attacker(Player_Char):
     def __init__(self, position):
         super().__init__(attacker_max_health, attacker_strength, attacker_timer_cap, position, "Attacker")
         self.special_move_name = "Charge (increase attack modifier)"
-        self.attack_modifier = 1.0
 
     # Deals (strength * modifier) damage to target enemy
     async def standard_attack(self):

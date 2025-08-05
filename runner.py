@@ -20,7 +20,7 @@ class Game:
         self.loop = asyncio.get_event_loop()
         self.health_bars = []
         self.turn_labels = []
-        self.label = tk.Label(root, text="Game Statistics")
+        self.label = tk.Label(root, text="Game Statistics", font="Ariel 24 bold")
         self.label.pack()
 
         self.state = 0 # 0 = Running, 1 = Player Win, 2 = Player Loss
@@ -61,9 +61,9 @@ class Game:
         self.entities.append(Enemy(3))
         for i in range(len(self.entities)):
             self.entities[i].set_list(self.entities)
-            self.health_bars.append(tk.Label(health_bar_frame, text = self.entities[i].health_string()))
+            self.health_bars.append(tk.Label(health_bar_frame, text = self.entities[i].health_string(), font="Ariel 20"))
             self.health_bars[i].pack(anchor="w")
-            self.turn_labels.append(tk.Label(turn_frame, text = self.entities[i].turn_string()))
+            self.turn_labels.append(tk.Label(turn_frame, text = self.entities[i].turn_string(), font="Ariel 20"))
             self.turn_labels[i].pack(anchor="w")
         health_bar_frame.pack(side = "left", padx = 10, pady = 5)
         turn_frame.pack(side = "left", padx = 10, pady = 5)

@@ -67,9 +67,9 @@ class Entity(ABC):
     # Returns a string to be put into a label
     def health_string(self):
         if self.is_alive():
-            return f"{self.role} in position {self.position} has {self.hp} health remaining."
+            return f"{self.role}: {self.hp} / {self.max_health} hp."
         else:
-            return f"{self.role} in position {self.position} has passed out."
+            return f"{self.role} has passed out."
     
     def turn_string(self):
         if self.is_alive():
