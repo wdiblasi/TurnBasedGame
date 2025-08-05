@@ -11,6 +11,7 @@ class Entity(ABC):
         self.timer = 0
         self.position = position
         self.entities = []
+        self.is_taunting = False
 
     # Increase timer for when turns are taken
     async def inc_timer(self):

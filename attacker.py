@@ -3,7 +3,7 @@ import asyncio
 
 attacker_max_health = 100
 attacker_strength = 20
-attacker_timer_cap = 1
+attacker_timer_cap = 8
 
 class Attacker(Player_Char):
     def __init__(self, position):

@@ -3,7 +3,7 @@ from entity import Entity
 
 enemy_max_health = 200
 enemy_strength = 20
-enemy_timer_cap = 2
+enemy_timer_cap = 5
 
 class Enemy(Entity):
 
@@ -13,7 +13,7 @@ class Enemy(Entity):
         self.turn_count = 0 # Number of turns the enemy has taken
         self.valid_targets = [0,1,2]
 
-    # The enemy will automatically take its turn and perform a special move every three turns
+    # The enemy will automatically take its turn and perform an additional special move every three turns
     async def take_turn(self):
         # Removing perished allys from enemy target list
         index_list = self.valid_targets.copy()
@@ -23,14 +23,21 @@ class Enemy(Entity):
         print(self.valid_targets)
 
         self.turn_count += 1
+        await self.standard_attack()
         if self.turn_count % 3 == 0:
             await self.special_move()
-        else:
-            await self.standard_attack()
 
     # Deal damage equal to strength to a random player character
     async def standard_attack(self):
-        target = random.choice(self.valid_targets)
+        taunting_allys = []
+        for index in self.valid_targets:
+            if self.entities[index].is_taunting:
+                taunting_allys.append(index)
+                self.entities[index].is_taunting = False
+        if len(taunting_allys) > 0:
+            target = random.choice(taunting_allys)
+        else:
+            target = random.choice(self.valid_targets)
         print(f"The enemy has done {int(self.strength)} damage to the ally in position {target}.")
         self.deal_damage(int(self.strength),target)
 
