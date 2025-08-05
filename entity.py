@@ -31,6 +31,8 @@ class Entity(ABC):
     # Deals damage to self
     def take_damage(self, damage):
         self.hp -= damage
+        if self.hp < 0:
+            self.hp = 0
 
     # Heals a percentage of target's health
     def heal_target(self, heal_percent, target):

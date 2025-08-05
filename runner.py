@@ -19,7 +19,7 @@ class Game:
         self.root = root
         self.loop = asyncio.get_event_loop()
         self.health_bars = []
-        self.label = tk.Label(root, text="Game starts soon...")
+        self.label = tk.Label(root, text="Game Statistics")
         self.label.pack()
 
         self.state = 0 # 0 = Running, 1 = Player Win, 2 = Player Loss
@@ -34,8 +34,10 @@ class Game:
 
         if self.state == 1:
             print("Congratulations! You Win!!!")
+            self.root.after(0, lambda: self.label.config(text="Congratulations! You Win!!!"))
         if self.state == 2:
             print("Game Over. You lose.")
+            self.root.after(0, lambda: self.label.config(text="Game Over. You lose."))
 
     def step_asyncio(self):
         self.loop.call_soon(self.loop.stop)
@@ -114,7 +116,7 @@ class Game:
 def main():
     print("Startup Initiated")
     root = tk.Tk()
-    root.title("Async + Tkinter")
+    root.title("Turn Based Game")
     game = Game(root)
     root.mainloop()
 
