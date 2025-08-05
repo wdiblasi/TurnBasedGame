@@ -7,7 +7,7 @@ tank_timer_cap = 5
 
 class Tank(Player_Char):
     def __init__(self, position):
-        super().__init__(tank_max_health, tank_strength, tank_timer_cap, position)
+        super().__init__(tank_max_health, tank_strength, tank_timer_cap, position, "Tank")
         self.special_move_name = f"Taunt (Enemy must target this character on its next turn)"
 
     # Deals (strength * modifier) damage to target enemy

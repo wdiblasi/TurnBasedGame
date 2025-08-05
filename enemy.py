@@ -8,7 +8,7 @@ enemy_timer_cap = 20
 class Enemy(Entity):
 
     def __init__(self, position):
-        super().__init__(enemy_max_health, enemy_strength, enemy_timer_cap, position)
+        super().__init__(enemy_max_health, enemy_strength, enemy_timer_cap, position, "Enemy")
         self.special_move_name = "Sweeping Strike"
         self.turn_count = 0 # Number of turns the enemy has taken
         self.valid_targets = [0,1,2]

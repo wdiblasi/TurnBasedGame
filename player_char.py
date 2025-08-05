@@ -6,8 +6,8 @@ from queue import Queue
 q = []
 
 class Player_Char(Entity):
-    def __init__(self, max_health, strength, timer_cap, position):
-        super().__init__(max_health, strength, timer_cap, position)
+    def __init__(self, max_health, strength, timer_cap, position, role):
+        super().__init__(max_health, strength, timer_cap, position, role)
 
     # Waits for player input before an ally takes a turn
     async def take_turn(self):

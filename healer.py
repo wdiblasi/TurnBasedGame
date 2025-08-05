@@ -8,7 +8,7 @@ healing_percent = 10
 
 class Healer(Player_Char):
     def __init__(self, position):
-        super().__init__(healer_max_health, healer_strength, healer_timer_cap, position)
+        super().__init__(healer_max_health, healer_strength, healer_timer_cap, position, "Healer")
         self.special_move_name = f"Healing spell (Heal up to {healing_percent}% health for all allies)"
 
     # Deals (strength * modifier) damage to target enemy

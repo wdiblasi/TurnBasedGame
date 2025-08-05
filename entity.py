@@ -3,7 +3,7 @@ import asyncio
 
 class Entity(ABC):
     # Initialize variables
-    def __init__(self, max_health, strength, timer_cap, position):
+    def __init__(self, max_health, strength, timer_cap, position, role):
         self.max_health = max_health
         self.hp = self.max_health
         self.strength = strength
@@ -12,6 +12,7 @@ class Entity(ABC):
         self.position = position
         self.entities = []
         self.is_taunting = False
+        self.role = role
 
     # Increase timer for when turns are taken
     async def inc_timer(self):
@@ -61,6 +62,10 @@ class Entity(ABC):
         if self.hp > 0:
             return True
         return False
+    
+    def to_string(self):
+        return f"{self.role} in position {self.position} has {self.hp} health remaining."
+
     
     @abstractmethod
     async def take_turn(self):
