@@ -3,7 +3,7 @@ import asyncio
 
 healer_max_health = 120
 healer_strength = 10
-healer_timer_cap = 70
+healer_timer_cap = 100
 healing_percent = 10
 
 class Healer(Player_Char):

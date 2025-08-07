@@ -1,9 +1,9 @@
 import random
 from entity import Entity
 
-enemy_max_health = 200
-enemy_strength = 51
-enemy_timer_cap = 200
+enemy_max_health = 300
+enemy_strength = 40
+enemy_timer_cap = 140
 
 class Enemy(Entity):
 
